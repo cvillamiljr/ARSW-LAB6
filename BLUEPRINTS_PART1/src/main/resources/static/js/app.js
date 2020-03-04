@@ -1,4 +1,4 @@
-var apiRe=apiclient;
+var apiRe=apiclient ;
 var app =(function(){
     var author=null;
     var plane =null;
@@ -56,7 +56,7 @@ var app =(function(){
          draw: function(i){
             var name = document.getElementById("bpName"+i).innerText ;
             $( "#currentBluePrint" ).html("Current BluePrint :"+ name);
-            apiRe.getBlueprintsByNameAndAuthor(name,author,dibujar);
+            apiRe.getBlueprintsByNameAndAuthor(author,name,dibujar);
          }
 	};
 })();
