@@ -45,15 +45,18 @@ var app =(function(){
     };
 
     var saveBP = function(autor) {
-        console.log("ingreseo a saveBP");
+        console.log("Entra a saveBP");
         var name = prompt("Ingrese el nombre del nuevo BluePrint:", "newBluePrint");
         var lista2 = {author: autor, points: lista, name: name};
         console.log(JSON.stringify(lista2));
         apiRe.putBluePrint(autor, name, JSON.stringify(lista2));
+        alert("Creado/actualizado con éxito")
+        app.update(autor);
       };
 
     function init() {
-            console.log("Ingreso a init");
+            console.log("Entra a init");
+            lista = [];
             var canvas = document.getElementById("myCanvas"),
                 ctx = canvas.getContext("2d");
             ctx.clearRect(0, 0, canvas.width, canvas.height)
