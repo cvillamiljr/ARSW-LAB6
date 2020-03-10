@@ -4,7 +4,6 @@ var app =(function(){
     var plane =null;
     var lista = [];
 
-
     var total = function(total, valor){
             return total + valor.value;
     };
@@ -45,6 +44,57 @@ var app =(function(){
         ctx.stroke();
     };
 
+    var saveBP = function(autor) {
+        console.log("ingreseo a saveBP");
+        var name = prompt("Ingrese el nombre del nuevo BluePrint:", "newBluePrint");
+        var lista2 = {author: autor, points: lista, name: name};
+        console.log(JSON.stringify(lista2));
+        apiRe.putBluePrint(autor, name, JSON.stringify(lista2));
+      };
+
+    function init() {
+            console.log("Ingreso a init");
+            var canvas = document.getElementById("myCanvas"),
+                ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            ctx.beginPath();
+            if (window.PointerEvent) {
+                canvas.addEventListener("pointerdown", drawing, false);
+            } else {
+                canvas.addEventListener("mousedown", drawing, false);
+            }
+        }
+
+        function drawing(event) {
+            console.log("pintando");
+            var canvas = document.getElementById("myCanvas"),
+                ctx = canvas.getContext("2d");
+            var offset = getOffset(canvas);
+            var posX = event.pageX - offset.left;
+            var posY = event.pageY - offset.top;
+            ctx.lineTo(posX,posY);
+            ctx.fillRect(posX, posY, 3, 3);
+            lista.push({x:posX,y:posY});
+
+        }
+
+        function getOffset(obj) {
+            var offsetLeft = 0;
+            var offsetTop = 0;
+            do {
+                if (!isNaN(obj.offsetLeft)) {
+                    offsetLeft += obj.offsetLeft;
+                }
+                if (!isNaN(obj.offsetTop)) {
+                    offsetTop += obj.offsetTop;
+                }
+            } while (obj = obj.offsetParent);
+            return {
+                left: offsetLeft,
+                top: offsetTop
+            };
+        }
+
 
 
     return {
@@ -56,7 +106,18 @@ var app =(function(){
          draw: function(i){
             var name = document.getElementById("bpName"+i).innerText ;
             $( "#currentBluePrint" ).html("Current BluePrint :"+ name);
+            var canvas = document.getElementById("myCanvas"),
+                            ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
             apiRe.getBlueprintsByNameAndAuthor(author,name,dibujar);
-         }
+
+         },
+         createBluePrint: function(author){
+             if (author == null || author == "") {
+                 alert("Por favor escriba el nomnbre de un autor");
+             }
+             else {init();}
+          },
+          saveBP: saveBP,
 	};
 })();

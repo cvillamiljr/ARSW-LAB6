@@ -19,6 +19,14 @@ apiclient = (function() {
                 },
                 async: true
             });
+        },
+        putBluePrint: function(author, name, newName){
+            $.ajax({
+                url: "/blueprints/" + author + "/" + name + "/",
+                type: "PUT",
+                data: newName,
+                contentType: "application/json"
+             });
         }
-    };
+     };
 })();
