@@ -69,7 +69,6 @@ var app =(function(){
         }
 
         function drawing(event) {
-            console.log("pintando");
             var canvas = document.getElementById("myCanvas"),
                 ctx = canvas.getContext("2d");
             var offset = getOffset(canvas);
@@ -78,7 +77,6 @@ var app =(function(){
             ctx.lineTo(posX,posY);
             ctx.fillRect(posX, posY, 3, 3);
             lista.push({x:posX,y:posY});
-
         }
 
         function getOffset(obj) {
